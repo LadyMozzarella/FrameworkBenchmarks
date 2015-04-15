@@ -1,5 +1,5 @@
 language: python
-python: 
+python:
   - "2.7"
 
 env:
@@ -41,6 +41,9 @@ env:
     - "TESTDIR=Elixir/phoenix"
     - "TESTDIR=Erlang/cowboy"
     - "TESTDIR=Erlang/elli"
+    - "TESTDIR=Erlang/misultin"
+    - "TESTDIR=Erlang/mochiweb"
+    - "TESTDIR=Erlang/yaws"
     - "TESTDIR=Go/beego"
     - "TESTDIR=Go/falcore"
     - "TESTDIR=Go/gin"
@@ -160,15 +163,15 @@ before_install:
   - ./toolset/run-ci.py cisetup "$TESTDIR"
 
 addons:
-  postgresql: "9.3" 
+  postgresql: "9.3"
 
 install:
   # Install prerequisites
   - ./toolset/run-ci.py prereq "$TESTDIR"
-  
+
   # Install software for this framework  
   - ./toolset/run-ci.py install "$TESTDIR"
-   
+
 script: 
   # Pick one test in this directory and verify
   - time ./toolset/run-ci.py verify "$TESTDIR"
