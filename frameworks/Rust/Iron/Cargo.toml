@@ -18,15 +18,16 @@ git = "https://github.com/iron/router.git"
 
 [dependencies.urlencoded]
 
-version = "0.1.0"
 git = "https://github.com/iron/urlencoded.git"
-
-[dependencies.persistent]
-
-git = "https://github.com/iron/persistent.git"
+version = "0.1.0"
 
 [dependencies.mysql]
 
 git = "https://github.com/blackbeam/rust-mysql-simple.git"
 # Disable SSL for mysql as it results in linking errors
 default-features = false
+
+[dependencies.common]
+
+git = "https://github.com/iron/common.git"
+version = "0.1.0"

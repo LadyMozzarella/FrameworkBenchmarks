@@ -67,23 +67,13 @@ fn plaintext_handler(_: &mut Request) -> IronResult<Response> {
 }
 
 // Automatically generate `Encodable` trait implementations
-#[deriving(Encodable)]
+#[derive(RustcEncodable)]
 pub struct HelloStruct  {
     message: String
 }
 
-// Handler for /json
-/*json_handler(_: &mut Request) -> IronResult<Response> {
- *   let object = HelloStruct {
- *       message: "Hello, World!".to_string()
- *   };
- *   let encoded = json::encode(&object);
- *
- *   Ok(Response::new().set(Status(status::Ok)).set(Body(encoded)))
- */}
-
 // Automatically generate `Encodable` trait implementations
-#[deriving(Encodable)]
+#[derive(RustcEncodable)]
 #[allow(non_snake_case)]
 pub struct WorldStruct  {
     id: int,
@@ -110,15 +100,15 @@ fn db_handler(req: &mut Request) -> IronResult<Response> {
     }
     let nqueries;
     match queries {
-        Some(number) => nqueries = max(1, min(number, 500i)),
+        Some(number) => nqueries = max(1, min(number, i500)),
         None         => nqueries = 1
     }
 
     // Stor result in a vector that will become a json list
     let mut vec = Vec::new();
     // Get our row id
-    for _ in range(0i, nqueries) {
-        let rndid = rng.gen_range(1i, 10000);
+    for _ in range(i0, nqueries) {
+        let rndid = rng.gen_range(i1, 10000);
         pool.prepare("SELECT * FROM World WHERE id = ?;")
         .and_then(|mut stmt| {
             for row in &mut stmt.execute(&[&rndid]) {
@@ -136,7 +126,7 @@ fn db_handler(req: &mut Request) -> IronResult<Response> {
 }
 
 // Automatically generate `Encodable` trait implementations
-#[deriving(Encodable)]
+#[derive(RustcEncodable)]
 pub struct FortuneStruct  {
     id: int,
     message: String
@@ -206,15 +196,15 @@ fn updates_handler(req: &mut Request) -> IronResult<Response> {
     }
     let nqueries;
     match queries {
-        Some(number) => nqueries = max(1, min(number, 500i)),
+        Some(number) => nqueries = max(1, min(number, i500)),
         None         => nqueries = 1
     }
 
     // Store result in a vector that will become a json list
     let mut vec = Vec::new();
-    for _ in range(0i, nqueries) {
+    for _ in range(i0, nqueries) {
         // Get our row id
-        let rndid = rng.gen_range(1i, 10000);
+        let rndid = rng.gen_range(i1, 10000);
         pool.prepare("SELECT * FROM World WHERE id = ?;")
         .and_then(|mut stmt| {
             for row in &mut stmt.execute(&[&rndid]) {
@@ -224,7 +214,7 @@ fn updates_handler(req: &mut Request) -> IronResult<Response> {
                     randomNumber: from_value(&row[1])
                 };
                 // Update random number to new value
-                let rnd_number = rng.gen_range(1i, 10000);
+                let rnd_number = rng.gen_range(i1, 10000);
                 world.randomNumber = rnd_number;
                 vec.push(world);
             }
