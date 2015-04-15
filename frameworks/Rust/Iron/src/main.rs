@@ -10,7 +10,7 @@ extern crate urlencoded;
 extern crate persistent;
 extern crate typemap;
 extern crate time;
-extern crate htmlescape;
+//extern crate htmlescape;
 
 use std::io::net::ip::Ipv4Addr;
 use iron::{Iron, AfterMiddleware, Request, Response, IronResult, Plugin, Chain, ChainBuilder, Set, status};
@@ -29,7 +29,7 @@ use mysql::conn::{MyOpts};
 use mysql::conn::pool::{MyPool};
 use mysql::value::{from_value};
 
-use htmlescape::encode_minimal;
+//use htmlescape::encode_minimal;
 
 use std::rand;
 use std::rand::Rng;
@@ -73,14 +73,14 @@ pub struct HelloStruct  {
 }
 
 // Handler for /json
-fn json_handler(_: &mut Request) -> IronResult<Response> {
-    let object = HelloStruct {
-        message: "Hello, World!".to_string()
-    };
-    let encoded = json::encode(&object);
-
-    Ok(Response::new().set(Status(status::Ok)).set(Body(encoded)))
-}
+/*json_handler(_: &mut Request) -> IronResult<Response> {
+ *   let object = HelloStruct {
+ *       message: "Hello, World!".to_string()
+ *   };
+ *   let encoded = json::encode(&object);
+ *
+ *   Ok(Response::new().set(Status(status::Ok)).set(Body(encoded)))
+ */}
 
 // Automatically generate `Encodable` trait implementations
 #[deriving(Encodable)]
